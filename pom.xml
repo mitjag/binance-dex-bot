@@ -1,0 +1,103 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>si.babypanda.binance.dex</groupId>
+	<artifactId>dex-bot</artifactId>
+	<version>0.0.1</version>
+	<name>dex-bot</name>
+	<description>Binance dex bot</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>yyyyMMdd-HHmmss</maven.build.timestamp.format>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.binance.dex.api</groupId>
+			<artifactId>binance-dex-api-client</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.26</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.26</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.1</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>${application.mainfest.mainClass}</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>dex-bot</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<application.mainfest.mainClass>si.babypanda.binance.dex.Bot</application.mainfest.mainClass>
+			</properties>
+		</profile>
+		<profile>
+			<id>airdrop</id>
+			<properties>
+				<application.mainfest.mainClass>si.babypanda.binance.dex.AirDrop</application.mainfest.mainClass>
+			</properties>
+		</profile>
+		<profile>
+			<id>analyze</id>
+			<properties>
+				<application.mainfest.mainClass>si.babypanda.binance.dex.Analyze</application.mainfest.mainClass>
+			</properties>
+		</profile>
+		<profile>
+			<id>warbot</id>
+			<properties>
+				<application.mainfest.mainClass>si.babypanda.binance.dex.WarBot</application.mainfest.mainClass>
+			</properties>
+		</profile>
+		<profile>
+			<id>swipe</id>
+			<properties>
+				<application.mainfest.mainClass>si.babypanda.binance.dex.SwipeOrderBook</application.mainfest.mainClass>
+			</properties>
+		</profile>
+	</profiles>
+</project>
